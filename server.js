@@ -1,53 +1,37 @@
 
-const http = require("http");
+const express = require("express");
+
+const app = express();
+app.use(express.json());
 
 const port = 8081 ;
 
-const toDOList = ["vinay" , "goud ", "ganapuram"];
+const toDoList = ["Vinay","Goud","ganapuram"];
 
-http
-.createServer((req,res)=>{
-    const {method , url} = req;
+app.get("/todos",(req,res)=>{
+    res.status(200).send(toDoList);
+});
+app.post("/todos",(req,res)=>{
+    let toDo = req.body.name;
+    toDoList.push(toDo);
+    res.status(201).send({message : "sent succesfull"});
 
-if (url === "/todos"){
-    if(method === "GET"){
-        res.writeHead(200,{"Content-Type" : "text/html"});
-        res.write(toDOList.toString());
+});
+app.delete("/todos",(req,res)=>{
+     let deleteItem = req.body.name;
+     toDoList.find((elem,index)=>{
+        if(elem === deleteItem);
+        toDoList.splice(index,1)
+     });
 
-    }
-    else if(method === "POST"){
-        let data = "";
-        req
-        .on( "error",(err) =>{
-           
 
-        }).on("data",(chunck)=>{
-            data += chunck ;
-           
-        }).on("end",()=>{
+    res.status(201).send({message : `delete succesfull ${req.body.name}`});
 
-            
-            body = JSON.parse(data);
-
-            let newtoDO = toDOList ;
-
-            newtoDO.push(body.item);  
-        });
-
-    } else{
-        res.writeHead(501);
-
-         } 
-    
-    }
-    else{
-        res.write(404);
-        }
-
-        res.end();
 })
-.listen(port, ()=> {
-    console.log(`it was excuted on port 8081 ${port} `);
+
+
+app.listen(port,()=>{
+    console.log(`Expressjs started at ${port}`);
 });
 
 

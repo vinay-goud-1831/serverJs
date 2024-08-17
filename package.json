@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "vinay" : "node server.js",
+    "vinay": "node server.js",
     "dev": "nodemon server.js"
   },
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/vinay-goud-1831/serverJs#readme",
   "dependencies": {
+    "express": "^4.19.2",
     "nodemon": "^3.1.3"
   }
 }
